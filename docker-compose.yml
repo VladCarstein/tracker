@@ -1,0 +1,15 @@
+services:
+  db:
+    image: postgres:16
+    container_name: tracker-db
+    environment:
+      POSTGRES_DB: tracker
+      POSTGRES_USER: tracker
+      POSTGRES_PASSWORD: tracker
+    ports:
+      - "5432:5432"
+    volumes:
+      - tracker-data:/var/lib/postgresql/data
+
+volumes:
+  tracker-data:

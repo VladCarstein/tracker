@@ -1,0 +1,11 @@
+### Создать задачу
+POST http://localhost:8080/api/tasks
+Content-Type: application/json
+
+{
+  "title": "Первая задача",
+  "description": "Проверить, что API работает"
+}
+
+### Все задачи
+GET http://localhost:8080/api/tasks
