@@ -1,5 +1,8 @@
 package com.example.tracker.service;
 
+import com.example.tracker.dto.TaskCreateRequest;
+import com.example.tracker.dto.TaskResponse;
+import com.example.tracker.dto.TaskUpdateRequest;
 import com.example.tracker.entity.Task;
 import com.example.tracker.repository.TaskRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,25 +23,42 @@ public class TaskService {
         return taskRepository.findAll();
     }
 
-    public Task save(Task task) {
+    public Task create(TaskCreateRequest request) {
+        Task task = createTask(request);
         return taskRepository.save(task);
     }
 
-    public Task getById(Long id) {
+    public Task getByIdOrThrow(Long id) {
         return taskRepository.findById(id).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
+    public TaskResponse findById(Long id) {
+        return TaskResponse.from(getByIdOrThrow(id));
+    }
+
     @Transactional
-    public Task update(Long id, Task update) {
-        Task task = getById(id);
-        task.setTitle(update.getTitle());
-        task.setDescription(update.getDescription());
-        task.setStatus(update.getStatus());
-        return task;
+    public TaskResponse update (Long id, TaskUpdateRequest update) {
+        Task task = getByIdOrThrow(id);
+        updateTask(task, update);
+        taskRepository.save(task);
+        return TaskResponse.from(task);
     }
 
     public void deleteById(Long id) {
-        Task task = getById(id);
+        Task task = getByIdOrThrow(id);
         taskRepository.delete(task);
+    }
+
+    private Task createTask(TaskCreateRequest request) {
+        Task task = new Task();
+        task.setTitle(request.title());
+        task.setDescription(request.description());
+        return task;
+    }
+
+    private void updateTask(Task task,TaskUpdateRequest update) {
+        task.setTitle(update.title());
+        task.setDescription(update.description());
+        task.setStatus(update.status());
     }
 }

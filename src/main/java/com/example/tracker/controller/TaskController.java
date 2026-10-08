@@ -1,5 +1,8 @@
 package com.example.tracker.controller;
 
+import com.example.tracker.dto.TaskCreateRequest;
+import com.example.tracker.dto.TaskResponse;
+import com.example.tracker.dto.TaskUpdateRequest;
 import com.example.tracker.entity.Task;
 import com.example.tracker.service.TaskService;
 import lombok.RequiredArgsConstructor;
@@ -20,18 +23,18 @@ public class TaskController {
     }
 
     @PostMapping
-    public Task create(@RequestBody Task task) {
-        return taskService.save(task);
+    public Task create(@RequestBody TaskCreateRequest request) {
+        return taskService.create(request);
     }
 
     @GetMapping("/{id}")
-    public Task getById(@PathVariable Long id) {
-        return taskService.getById(id);
+    public TaskResponse findById(@PathVariable Long id) {
+        return taskService.findById(id);
     }
 
     @PutMapping("/{id}")
-    public Task update(@PathVariable Long id, @RequestBody Task updatedTask) {
-        return taskService.update(id, updatedTask);
+    public TaskResponse update(@PathVariable Long id, @RequestBody TaskUpdateRequest updated) {
+        return taskService.update(id, updated);
     }
 
     @DeleteMapping("/{id}")
