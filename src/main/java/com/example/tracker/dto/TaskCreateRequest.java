@@ -1,5 +1,12 @@
 package com.example.tracker.dto;
 
-public record TaskCreateRequest(String title, String description) {
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
+public record TaskCreateRequest(
+        @NotBlank
+        @Size(max = 100)
+        String title,
+        String description) {
 
 }

@@ -19,17 +19,14 @@ public class TaskService {
 
     private final TaskRepository taskRepository;
 
-    public List<Task> findAll() {
-        return taskRepository.findAll();
+    public List<TaskResponse> findAll() {
+        return taskRepository.findAll().stream().map(TaskResponse::from).toList();
     }
 
-    public Task create(TaskCreateRequest request) {
+    public TaskResponse create(TaskCreateRequest request) {
         Task task = createTask(request);
-        return taskRepository.save(task);
-    }
-
-    public Task getByIdOrThrow(Long id) {
-        return taskRepository.findById(id).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        Task save = taskRepository.save(task);
+        return TaskResponse.from(save);
     }
 
     public TaskResponse findById(Long id) {
@@ -37,7 +34,7 @@ public class TaskService {
     }
 
     @Transactional
-    public TaskResponse update (Long id, TaskUpdateRequest update) {
+    public TaskResponse update(Long id, TaskUpdateRequest update) {
         Task task = getByIdOrThrow(id);
         updateTask(task, update);
         taskRepository.save(task);
@@ -49,6 +46,10 @@ public class TaskService {
         taskRepository.delete(task);
     }
 
+    private Task getByIdOrThrow(Long id) {
+        return taskRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
+
     private Task createTask(TaskCreateRequest request) {
         Task task = new Task();
         task.setTitle(request.title());
@@ -56,7 +57,7 @@ public class TaskService {
         return task;
     }
 
-    private void updateTask(Task task,TaskUpdateRequest update) {
+    private void updateTask(Task task, TaskUpdateRequest update) {
         task.setTitle(update.title());
         task.setDescription(update.description());
         task.setStatus(update.status());

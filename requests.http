@@ -3,7 +3,7 @@ POST http://localhost:8080/api/tasks
 Content-Type: application/json
 
 {
-  "title": "Первая задача",
+  "title": "",
   "description": "Проверить, что API работает"
 }
 

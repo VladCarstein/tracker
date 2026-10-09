@@ -3,8 +3,8 @@ package com.example.tracker.controller;
 import com.example.tracker.dto.TaskCreateRequest;
 import com.example.tracker.dto.TaskResponse;
 import com.example.tracker.dto.TaskUpdateRequest;
-import com.example.tracker.entity.Task;
 import com.example.tracker.service.TaskService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -18,12 +18,12 @@ public class TaskController {
     private final TaskService taskService;
 
     @GetMapping
-    public List<Task> getTasks() {
+    public List<TaskResponse> getTasks() {
         return taskService.findAll();
     }
 
     @PostMapping
-    public Task create(@RequestBody TaskCreateRequest request) {
+    public TaskResponse create(@Valid @RequestBody TaskCreateRequest request) {
         return taskService.create(request);
     }
 
@@ -33,7 +33,7 @@ public class TaskController {
     }
 
     @PutMapping("/{id}")
-    public TaskResponse update(@PathVariable Long id, @RequestBody TaskUpdateRequest updated) {
+    public TaskResponse update(@PathVariable Long id, @Valid @RequestBody TaskUpdateRequest updated) {
         return taskService.update(id, updated);
     }
 
