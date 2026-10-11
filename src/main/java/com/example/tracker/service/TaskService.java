@@ -4,12 +4,11 @@ import com.example.tracker.dto.TaskCreateRequest;
 import com.example.tracker.dto.TaskResponse;
 import com.example.tracker.dto.TaskUpdateRequest;
 import com.example.tracker.entity.Task;
+import com.example.tracker.exception.TaskNotFoundException;
 import com.example.tracker.repository.TaskRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -47,7 +46,7 @@ public class TaskService {
     }
 
     private Task getByIdOrThrow(Long id) {
-        return taskRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        return taskRepository.findById(id).orElseThrow(() -> new TaskNotFoundException(id));
     }
 
     private Task createTask(TaskCreateRequest request) {
