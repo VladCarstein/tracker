@@ -37,16 +37,18 @@ public class TaskServiceTest {
 
     @Test
     void findById_whenTaskFound_returnTask() {
+        Long taskId = 1L;
+
         Task task = new Task();
-        task.setId(1L);
+        task.setId(taskId);
         task.setTitle("Task 1");
         task.setDescription("TaskDescription 1");
         task.setCreatedAt(OffsetDateTime.now());
 
-        when(taskRepository.findById(1L)).thenReturn(Optional.of(task));
-        TaskResponse response = taskService.findById(1L);
+        when(taskRepository.findById(taskId)).thenReturn(Optional.of(task));
+        TaskResponse response = taskService.findById(taskId);
 
-        assertEquals(1L, response.id());
+        assertEquals(taskId, response.id());
         assertEquals("Task 1", response.title());
         assertEquals(TaskStatus.TODO, response.status());
     }
