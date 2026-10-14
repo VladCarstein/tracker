@@ -3,8 +3,9 @@ POST http://localhost:8080/api/tasks
 Content-Type: application/json
 
 {
-  "title": "",
-  "description": "Проверить, что API работает"
+  "title": "пя",
+  "description": "Проверить",
+  "projectId": 1213
 }
 
 ### Все задачи
@@ -28,3 +29,16 @@ Content-Type: application/json
 
 ### Удалить задачу
 DELETE http://localhost:8080/api/tasks/1
+
+
+### Создать проект
+POST http://localhost:8080/api/projects
+Content-Type: application/json
+
+{
+  "name": "1 проект",
+  "description": "Проверка"
+}
+
+### Все проекты
+GET http://localhost:8080/api/projects

@@ -7,6 +7,9 @@ public record TaskCreateRequest(
         @NotBlank
         @Size(max = 100)
         String title,
-        String description) {
+        String description,
+        Long projectId
+
+) {
 
 }

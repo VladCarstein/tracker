@@ -23,7 +23,12 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler
-    public ProblemDetail handleNotFound(TaskNotFoundException ex) {
+    public ProblemDetail taskHandleNotFound(TaskNotFoundException ex) {
+        return ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getMessage());
+    }
+
+    @ExceptionHandler
+    public ProblemDetail projectHandleNotFound(ProjectNotFoundException ex) {
         return ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getMessage());
     }
 }
