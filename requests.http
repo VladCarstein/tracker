@@ -5,7 +5,7 @@ Content-Type: application/json
 {
   "title": "пя",
   "description": "Проверить",
-  "projectId": 1213
+  "projectId": 2
 }
 
 ### Все задачи
@@ -36,9 +36,12 @@ POST http://localhost:8080/api/projects
 Content-Type: application/json
 
 {
-  "name": "1 проект",
+  "name": "2 проект",
   "description": "Проверка"
 }
 
 ### Все проекты
 GET http://localhost:8080/api/projects
+
+###
+GET http://localhost:8080/api/tasks?projectId=2

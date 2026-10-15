@@ -25,4 +25,5 @@ public class ProjectController {
     public ProjectResponse create(@Valid @RequestBody ProjectCreateRequest projectCreateRequest) {
         return projectService.create(projectCreateRequest);
     }
+
 }

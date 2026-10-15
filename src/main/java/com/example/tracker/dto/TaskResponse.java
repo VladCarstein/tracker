@@ -10,7 +10,8 @@ public record TaskResponse(
         String title,
         String description,
         TaskStatus status,
-        LocalDateTime createdAt
+        LocalDateTime createdAt,
+        Long projectId
 ) {
 
     public static TaskResponse from(Task task) {
@@ -19,7 +20,8 @@ public record TaskResponse(
                 task.getTitle(),
                 task.getDescription(),
                 task.getStatus(),
-                task.getCreatedAt().toLocalDateTime()
+                task.getCreatedAt().toLocalDateTime(),
+                task.getProject() !=null ? task.getProject().getId() : null
         );
     }
 }

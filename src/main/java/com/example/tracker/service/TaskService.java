@@ -43,6 +43,10 @@ public class TaskService {
         return TaskResponse.from(getByIdOrThrow(id));
     }
 
+    public List<TaskResponse> findByProjectId(Long projectId) {
+        return taskRepository.findByProjectId(projectId).stream().map(TaskResponse::from).toList();
+    }
+
     @Transactional
     public TaskResponse update(Long id, TaskUpdateRequest update) {
         Task task = getByIdOrThrow(id);
