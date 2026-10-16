@@ -21,7 +21,7 @@ public record TaskResponse(
                 task.getDescription(),
                 task.getStatus(),
                 task.getCreatedAt().toLocalDateTime(),
-                task.getProject() !=null ? task.getProject().getId() : null
+                task.getProject() != null ? task.getProject().getId() : null
         );
     }
 }
