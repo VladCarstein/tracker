@@ -18,8 +18,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.time.OffsetDateTime;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -82,7 +81,7 @@ public class TaskServiceTest {
     }
 
     @Test
-    void create() {
+    void create_whenProjectNotExists_throwsException() {
         when(projectRepository.findById(999L)).thenReturn(Optional.empty());
 
         TaskCreateRequest request = new TaskCreateRequest("F", "B", 999L);
@@ -93,7 +92,7 @@ public class TaskServiceTest {
     }
 
     @Test
-    void createTask() {
+    void create_whenProjectExists_linksTaskToProject() {
 
         Project project = new Project();
         project.setId(1L);
@@ -113,6 +112,26 @@ public class TaskServiceTest {
         assertEquals("F", response.title());
         assertEquals("B", response.description());
         assertEquals(1L, response.projectId());
+    }
+
+    @Test
+    void create_whenProjectIdIsNull_createsTaskWithoutProject () {
+
+        TaskCreateRequest request = new TaskCreateRequest("F", "B", null);
+
+        when(taskRepository.save(any(Task.class))).thenAnswer(invocation -> {
+            Task saved = invocation.getArgument(0);
+            saved.setId(1L);
+            saved.setCreatedAt(OffsetDateTime.now());
+            return saved;
+        });
+
+        TaskResponse response = taskService.create(request);
+
+        assertEquals("F", request.title());
+        assertEquals("B", response.description());
+        assertNull(response.projectId());
+        verify(projectRepository, never()).findById(any());
     }
 }
 
