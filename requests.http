@@ -36,7 +36,7 @@ POST http://localhost:8080/api/projects
 Content-Type: application/json
 
 {
-  "name": "2 проект",
+  "name": "1 проект",
   "description": "Проверка"
 }
 
