@@ -5,7 +5,7 @@ Content-Type: application/json
 {
   "title": "пя",
   "description": "Проверить",
-  "projectId": 2
+  "projectId": 1
 }
 
 ### Все задачи
