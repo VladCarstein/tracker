@@ -37,6 +37,8 @@ docker compose up -d
 
 Swagger UI: `http://localhost:8080/swagger-ui/index.html`
 
+![Swagger UI](docs/swagger.png)
+
 ## Эндпоинты
 
 | Метод | Адрес | Описание |
